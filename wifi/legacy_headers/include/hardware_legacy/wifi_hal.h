@@ -1296,6 +1296,35 @@ typedef struct {
              wifi_interface_type iface_type, wifi_vendor_data* vendor_data);
 
     /*
+     * APIs added after the ultra-legacy table layout.  They must remain at the
+     * tail so old vendor HAL offsets stay intact while current source HALs and
+     * the AIDL adapter can still negotiate the newer callbacks.
+     */
+    wifi_error (*wifi_rtt_range_request_v3)(wifi_request_id, wifi_interface_handle, unsigned,
+                                            wifi_rtt_config_v3[], wifi_rtt_event_handler_v3);
+    wifi_error (*wifi_rtt_range_request_v4)(wifi_request_id, wifi_interface_handle, unsigned,
+                                            wifi_rtt_config_v4[], wifi_rtt_event_handler_v4);
+    wifi_error (*wifi_get_rtt_capabilities_v3)(wifi_interface_handle,
+                                               wifi_rtt_capabilities_v3*);
+    wifi_error (*wifi_get_rtt_capabilities_v4)(wifi_interface_handle,
+                                               wifi_rtt_capabilities_v4*);
+    wifi_error (*wifi_twt_get_capabilities)(wifi_interface_handle,
+                                            wifi_twt_capabilities* capabilities);
+    wifi_error (*wifi_twt_register_events)(wifi_interface_handle, wifi_twt_events events);
+    wifi_error (*wifi_twt_session_setup)(wifi_request_id, wifi_interface_handle,
+                                         wifi_twt_request request);
+    wifi_error (*wifi_twt_session_update)(wifi_request_id, wifi_interface_handle, int session_id,
+                                          wifi_twt_request request);
+    wifi_error (*wifi_twt_session_suspend)(wifi_request_id, wifi_interface_handle,
+                                           int session_id);
+    wifi_error (*wifi_twt_session_resume)(wifi_request_id, wifi_interface_handle,
+                                          int session_id);
+    wifi_error (*wifi_twt_session_teardown)(wifi_request_id, wifi_interface_handle,
+                                            int session_id);
+    wifi_error (*wifi_twt_session_get_stats)(wifi_request_id, wifi_interface_handle,
+                                             int session_id);
+
+    /*
      * when adding new functions make sure to add stubs in
      * wifi_legacy_hal_stubs.cpp::initHalFuncTableWithStubs
      */
